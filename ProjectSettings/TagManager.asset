@@ -8,6 +8,7 @@ TagManager:
   - Ball
   - Paddle
   - Wall
+  - DeadBallArea
   layers:
   - Default
   - TransparentFX

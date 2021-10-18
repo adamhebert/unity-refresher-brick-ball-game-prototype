@@ -10,7 +10,8 @@ namespace Utilities
             Ball,
             Brick,
             Paddle,
-            Wall
+            Wall,
+            DeadBallArea,
         }
 
         public static Option<GameObjectType> GetGameObjectTypeFromTag(string tag) => mTagToGameObjectType.GetValueIfPresent(tag);
@@ -22,7 +23,8 @@ namespace Utilities
                 { "Ball", GameObjectType.Ball },
                 { "Brick", GameObjectType.Brick },
                 { "Paddle", GameObjectType.Paddle },
-                { "Wall", GameObjectType.Wall }
+                { "Wall", GameObjectType.Wall },
+                { "DeadBallArea", GameObjectType.DeadBallArea },
             };
     }
 }

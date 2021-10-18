@@ -1,42 +1,51 @@
 using UnityEngine;
 using Utilities;
 
-public sealed class Brick : MonoBehaviour
+namespace GameObjects
 {
-    // Start is called before the first frame update
-    void Start()
+    public sealed class Brick : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // We only care about collision when it's in the basic normal state.
-        if (mBrickState == BrickState.Normal)
+        // Start is called before the first frame update
+        void Start()
         {
-            // TODO: Start some kind of break animation.
-            // TODO: Notify the score manager...maybe the ball should do that...or a third party reconciler...
-            TagUtils.GetGameObjectTypeFromTag(collision.gameObject.tag).ForEach(
-                _ =>
-                {
-                    mBrickState = BrickState.Breaking;
-                    this.gameObject.SetActive(false);
-                });
+            mBrickState = BrickState.Normal;
+            mGameLifetime = FindObjectOfType<GameLifetime>();
         }
-    }
 
-    private BrickState mBrickState = BrickState.Normal;
+        // Update is called once per frame
+        void Update()
+        {
 
-    private enum BrickState
-    {
-        Normal,
-        Breaking,
-        Dead
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            // We only care about collision when it's in the basic normal state.
+            if (mBrickState == BrickState.Normal)
+            {
+                // TODO: Start some kind of break animation.
+                // TODO: Notify the score manager...maybe the ball should do that...or a third party reconciler...
+                TagUtils.GetGameObjectTypeFromTag(collision.gameObject.tag).ForEach(
+                    _ =>
+                    {
+                        mBrickState = BrickState.Breaking;
+                        this.gameObject.SetActive(false);
+                        mGameLifetime.AddScore(mPointValue);
+                    });
+            }
+        }
+
+        [SerializeField] private int mPointValue = 1;
+
+        private BrickState mBrickState = BrickState.Normal;
+        // This feels really wrong. Look into better ways of referencing things.
+        private GameLifetime mGameLifetime;
+
+        private enum BrickState
+        {
+            Normal,
+            Breaking,
+            Dead
+        }
     }
 }
