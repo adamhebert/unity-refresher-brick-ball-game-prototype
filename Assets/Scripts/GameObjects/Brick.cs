@@ -9,7 +9,7 @@ namespace GameObjects
         private void Start()
         {
             mBrickState = BrickState.Normal;
-            mGameLifetime = FindObjectOfType<GameLifetime>();
+            mGameLifetime = GameLifetime.Instance;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)

@@ -2,30 +2,34 @@ using UnityEngine;
 
 public sealed class GameLifetime : MonoBehaviour
 {
-    private void Awake()
-    {
-        if (mInstance != null && mInstance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            DontDestroyOnLoad(gameObject);
-            mInstance = this;
-            InitInternals();
-        }
-    }
+    public static GameLifetime Instance => GetInstance();
+    public long GetScore() => mScore;
+    public void AddScore(long score) => mScore += score;
+    public void AddDeath() => mRest -= 1;
+    public int GetRest() => mRest;
+    public bool GameIsOver() => mRest <= 0;
 
-    private void InitInternals()
+    public void ResetGame()
     {
         this.mScore = 0;
         this.mRest = _StartingRest;
     }
 
-    public long GetScore() => mScore;
-    public void AddScore(long score) => mScore += score;
-    public void AddDeath() => mRest -= 1;
-    public int GetRest() => mRest;
+    private static GameLifetime GetInstance()
+    {
+        if (mInstance != null)
+        {
+            return mInstance;
+        }
+
+        var gameObject = Resources.Load("GameLifetime", typeof(GameObject)) as GameObject;
+        var instance = Object.Instantiate(gameObject) as GameObject;
+
+        mInstance = instance.GetComponent<GameLifetime>();
+        DontDestroyOnLoad(instance);
+
+        return mInstance;
+    }
 
 
     private long mScore = 0;

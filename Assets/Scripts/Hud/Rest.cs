@@ -8,7 +8,7 @@ namespace Hud
         // Start is called before the first frame update
         private void Start()
         {
-            mGameLifetime = FindObjectOfType<GameLifetime>();
+            mGameLifetime = GameLifetime.Instance;
         }
 
         // Update is called once per frame

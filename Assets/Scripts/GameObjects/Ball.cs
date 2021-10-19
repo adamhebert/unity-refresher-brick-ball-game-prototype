@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Utilities;
 
 namespace GameObjects
@@ -8,9 +10,11 @@ namespace GameObjects
         // Start is called before the first frame update
         private void Start()
         {
-            mGameLifetime = FindObjectOfType<GameLifetime>();
+            mGameLifetime = GameLifetime.Instance;
 
             Initialize();
+
+            mAfterDeathDelay = new WaitForSeconds(_AfterDeathDelayBeforeTransition);
         }
 
         private void OnTriggerEnter2D(Collider2D collision) =>
@@ -21,9 +25,19 @@ namespace GameObjects
                     {
                         case TagUtils.GameObjectType.DeadBallArea:
                             mGameLifetime.AddDeath();
-                            Initialize();
 
                             // TODO: What happens when the player runs out of lives? Game Over screen needs to be implemented or something. Maybe start game over for demo purposes.
+
+                            // This is super goofy. The ball shouldn't control this...especially if there are special ball powerups in the game later, or multiple balls, etc.
+                            // Just trying to get something going quickly for now.
+                            if (mGameLifetime.GetRest() <= 0)
+                            {
+                                StartCoroutine(ChangeScene());
+                            }
+                            else
+                            {
+                                Initialize();
+                            }
                             break;
 
                         case TagUtils.GameObjectType.Ball:
@@ -50,12 +64,23 @@ namespace GameObjects
             this._RigidBody.AddForce(GetStartingDirection() * _StartingForceMultiplier);
         }
 
+        private IEnumerator ChangeScene()
+        {
+            // TODO: Move this duty to some scene manager...some other thing should detect that a game over has occurred.
+            yield return mAfterDeathDelay;
+            yield return SceneManager.LoadSceneAsync("GameOverMenu");
+            yield return SceneManager.UnloadSceneAsync(this.gameObject.scene);
+            yield return Resources.UnloadUnusedAssets();
+        }
+
         private GameLifetime mGameLifetime;
+        private WaitForSeconds mAfterDeathDelay;
 
         #region InspectorMembers
         [SerializeField] private Vector2 _StartingPosition = default;
         [SerializeField] private float _StartingForceMultiplier = 1.0f;
         [SerializeField] private Rigidbody2D _RigidBody = default;
+        [SerializeField] private float _AfterDeathDelayBeforeTransition = 0.0f;
         #endregion
     }
 }

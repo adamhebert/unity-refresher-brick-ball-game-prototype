@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Prelude;
 
 namespace GameObjects
 {
@@ -23,7 +24,7 @@ namespace GameObjects
             //}
 
             static bool isMoving(MovementType movementType) =>
-                mMovementToKeyCodesTempMappingSystem.GetValueIfPresent(movementType).Match(keyCodes => keyCodes.Any(Input.GetKey), () => false);
+                !GameLifetime.Instance.GameIsOver() && mMovementToKeyCodesTempMappingSystem.GetValueIfPresent(movementType).Match(keyCodes => keyCodes.Any(Input.GetKey), () => false);
 
             // TODO: Build an input system of some kind.
             // TODO: Allow the player to map whatever keys that want to specific things.
