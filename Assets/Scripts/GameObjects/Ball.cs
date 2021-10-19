@@ -6,7 +6,7 @@ namespace GameObjects
     public sealed class Ball : MonoBehaviour
     {
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             mGameLifetime = FindObjectOfType<GameLifetime>();
 
@@ -45,16 +45,17 @@ namespace GameObjects
                 return new Vector2(x, y).normalized;
             }
 
-            this.mRigidBody.position = mStartingPosition;
-            this.mRigidBody.velocity = Vector2.zero;
-            this.mRigidBody.AddForce(GetStartingDirection() * mStartingForceMultiplier);
+            this._RigidBody.position = _StartingPosition;
+            this._RigidBody.velocity = Vector2.zero;
+            this._RigidBody.AddForce(GetStartingDirection() * _StartingForceMultiplier);
         }
 
-        // Exposed to Unity Editor.
-        [SerializeField] private Vector2 mStartingPosition;
-        [SerializeField] private float mStartingForceMultiplier = 1.0f;
-        [SerializeField] private Rigidbody2D mRigidBody;
-
         private GameLifetime mGameLifetime;
+
+        #region InspectorMembers
+        [SerializeField] private Vector2 _StartingPosition = default;
+        [SerializeField] private float _StartingForceMultiplier = 1.0f;
+        [SerializeField] private Rigidbody2D _RigidBody = default;
+        #endregion
     }
 }

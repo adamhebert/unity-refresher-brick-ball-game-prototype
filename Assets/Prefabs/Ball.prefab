@@ -118,9 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba0c1029a82e2f94089ef722006d09b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mStartingPosition: {x: 0, y: 1.3}
-  mStartingForceMultiplier: 1
-  mRigidBody: {fileID: 6036414741971205343}
+  _StartingPosition: {x: 0, y: 1.5}
+  _StartingForceMultiplier: 500
+  _RigidBody: {fileID: 6036414741971205343}
 --- !u!58 &-2397588898995290278
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -7,16 +7,21 @@ namespace GameObjects
     public sealed class PaddleMovement : MonoBehaviour
     {
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
-            mCurrentVelocity = mMovementVelocity;
+            mCurrentVelocity = _MovementVelocity;
             mCurrentDirection = Vector2.zero;
-            mHorizontalWorldEnd = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - mWallPixelScale - mWallCollisionBuffer, Screen.height, 0.0f)).x - this.GetComponent<SpriteRenderer>().bounds.size.x / 2.0f;
+            mHorizontalWorldEnd = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - _WallPixelScale - _WallCollisionBuffer, Screen.height, 0.0f)).x - this.GetComponent<SpriteRenderer>().bounds.size.x / 2.0f;
         }
 
-        // Update is called once per frame
-        void Update()
+        private void FixedUpdate()
         {
+            // Tried playing around with the paddle being dynamic. Need to deeper dive into the physics system in Unity...collision was wonky from what I'd expect. So I switched back to Kinematic. Will control the paddle myself.
+            //if (this.mCurrentDirection.sqrMagnitude >= 0.0f)
+            //{
+            //    this.mRigidBody.AddForce(this.mCurrentDirection * this.mCurrentVelocity);
+            //}
+
             static bool isMoving(MovementType movementType) =>
                 mMovementToKeyCodesTempMappingSystem.GetValueIfPresent(movementType).Match(keyCodes => keyCodes.Any(Input.GetKey), () => false);
 
@@ -37,16 +42,6 @@ namespace GameObjects
             {
                 mCurrentDirection = Vector2.zero;
             }
-        }
-
-        private void FixedUpdate()
-        {
-            // Tried playing around with the paddle being dynamic. Need to deeper dive into the physics system in Unity...collision was wonky from what I'd expect. So I switched back to Kinematic. Will control the paddle myself.
-            //if (this.mCurrentDirection.sqrMagnitude >= 0.0f)
-            //{
-            //    this.mRigidBody.AddForce(this.mCurrentDirection * this.mCurrentVelocity);
-            //}
-
 
             // Assumption is a normalized vector here for our purposes. But scaling the vector may be desired. Will have to see where game options take me.
             // Consider making some other kind of system to move things based on cameras. This feels dangerous if left to each script/component...if we ever have more cameras.
@@ -56,15 +51,9 @@ namespace GameObjects
             }
         }
 
-        // Exposed to Unity Editor.
-        [SerializeField] private float mMovementVelocity = 1.0f;
-        [SerializeField] private float mWallPixelScale;
-
         private float mCurrentVelocity;
         private Vector2 mCurrentDirection;
         private float mHorizontalWorldEnd;
-
-        private static readonly float mWallCollisionBuffer = 4.0f;
 
         private enum MovementType
         {
@@ -78,5 +67,11 @@ namespace GameObjects
                 { MovementType.Left, new KeyCode[] { KeyCode.LeftArrow, KeyCode.A } },
                 { MovementType.Right, new KeyCode[] { KeyCode.RightArrow, KeyCode.D } }
             };
+
+        #region InspectorMembers
+        [SerializeField] private float _MovementVelocity = 1.0f;
+        [SerializeField] private float _WallPixelScale = default;
+        [SerializeField] private float _WallCollisionBuffer = default;
+        #endregion
     }
 }

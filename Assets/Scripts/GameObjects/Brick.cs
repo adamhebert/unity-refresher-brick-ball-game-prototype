@@ -6,16 +6,10 @@ namespace GameObjects
     public sealed class Brick : MonoBehaviour
     {
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             mBrickState = BrickState.Normal;
             mGameLifetime = FindObjectOfType<GameLifetime>();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -30,12 +24,11 @@ namespace GameObjects
                     {
                         mBrickState = BrickState.Breaking;
                         this.gameObject.SetActive(false);
-                        mGameLifetime.AddScore(mPointValue);
+                        mGameLifetime.AddScore(_PointValue);
                     });
             }
         }
 
-        [SerializeField] private int mPointValue = 1;
 
         private BrickState mBrickState = BrickState.Normal;
         // This feels really wrong. Look into better ways of referencing things.
@@ -47,5 +40,9 @@ namespace GameObjects
             Breaking,
             Dead
         }
+
+        #region InspectorMembers
+        [SerializeField] private int _PointValue = 1;
+        #endregion
     }
 }

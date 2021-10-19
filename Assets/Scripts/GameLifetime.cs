@@ -12,20 +12,14 @@ public sealed class GameLifetime : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             mInstance = this;
-            _InitInternals();
+            InitInternals();
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void _InitInternals()
+    private void InitInternals()
     {
         this.mScore = 0;
-        this.mRest = mStartingRest;
+        this.mRest = _StartingRest;
     }
 
     public long GetScore() => mScore;
@@ -33,10 +27,13 @@ public sealed class GameLifetime : MonoBehaviour
     public void AddDeath() => mRest -= 1;
     public int GetRest() => mRest;
 
-    [SerializeField] private int mStartingRest;
 
     private long mScore = 0;
     private int mRest;
 
     private static GameLifetime mInstance;
+
+    #region InspectorMembers
+    [SerializeField] private int _StartingRest = default;
+    #endregion
 }

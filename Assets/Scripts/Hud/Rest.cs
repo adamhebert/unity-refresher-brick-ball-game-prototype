@@ -6,19 +6,21 @@ namespace Hud
     public sealed class Rest : MonoBehaviour
     {
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             mGameLifetime = FindObjectOfType<GameLifetime>();
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
-            mScoreText.text = $"{mGameLifetime.GetRest()}";
+            _ScoreText.text = $"{mGameLifetime.GetRest()}";
         }
 
-        [SerializeField] private Text mScoreText;
-
         private GameLifetime mGameLifetime;
+
+        #region InspectorMembers
+        [SerializeField] private Text _ScoreText = default;
+        #endregion
     }
 }
