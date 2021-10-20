@@ -62,31 +62,34 @@ namespace GameObjects
                     switch (type)
                     {
                         // A helper to make the ball go upward from the paddle. We never really want to hit it sideways.
+                        case TagUtils.GameObjectType.Brick:
                         case TagUtils.GameObjectType.Paddle:
 
                             const float halfCircleAngle = 180.0f;
+                            const float rightAngle = 90.0f;
 
                             var angleFromRight = Vector2.SignedAngle(this._RigidBody.velocity, Vector2.right);
 
                             if (angleFromRight < -halfCircleAngle + this._MaxAllowedAngleFromUp)
                             {
                                 // Moving too straight sideways in the upper left quadrant.
-                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(halfCircleAngle - this._MaxAllowedAngleFromUp + angleFromRight);
+                                //this._RigidBody.velocity = this._RigidBody.velocity.Rotate(halfCircleAngle - this._MaxAllowedAngleFromUp + angleFromRight);
+                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight + rightAngle + this._MaxAllowedAngleFromUp);
                             }
                             else if (angleFromRight > halfCircleAngle - this._MaxAllowedAngleFromUp)
                             {
                                 // Moving too straight sideways in the lower left quadrant.
-                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight - (halfCircleAngle - this._MaxAllowedAngleFromUp));
+                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight - (rightAngle + this._MaxAllowedAngleFromUp));
                             }
                             else if (angleFromRight < 0.0f && angleFromRight > -this._MaxAllowedAngleFromUp)
                             {
                                 // Moving too straight sideways in the upper right quadrant.
-                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight + this._MaxAllowedAngleFromUp);
+                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight + rightAngle - this._MaxAllowedAngleFromUp);
                             }
                             else if (angleFromRight > 0.0f && angleFromRight < this._MaxAllowedAngleFromUp)
                             {
                                 // Moving too straight sideways in the lower right quadrant.
-                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight - this._MaxAllowedAngleFromUp);
+                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(rightAngle - this._MaxAllowedAngleFromUp - angleFromRight);
                             }
                             break;
                     }

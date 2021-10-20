@@ -122,7 +122,7 @@ MonoBehaviour:
   _StartingForceMultiplier: 600
   _MaxMagnitude: 30
   _IncrementalForceOnPaddleHit: 50
-  _MaxAllowedAngleFromUp: 45
+  _MaxAllowedAngleFromUp: 55
   _RigidBody: {fileID: 6036414741971205343}
   _AfterDeathDelayBeforeTransition: 2
 --- !u!58 &-2397588898995290278
