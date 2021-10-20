@@ -1,7 +1,7 @@
 # unity-refresher-breakout-prototype
 
 ### Brick Game
-- A long time classic and favorite. Easy to understand, relatively (to a lot of other games) easy to build quickly.
+- A long time classic and favorite. Easy to understand, and relatively (to a lot of other games) easy to build quickly.
 - Current Features:  
 --> Simple Menus  
 --> Paddle  
