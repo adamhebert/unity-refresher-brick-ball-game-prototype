@@ -25,6 +25,7 @@
 
 ### To Run
 - Build settings should be set to the proper scene order already (But just in case, it's MainMenu=0, Level=1, GameOverMenu=2)  
+--> Open *File -> Build Settings*  
 --> Make sure *PC, Mac & Linux Standalone* is selected  
 --> Select *Build And Run*  
 --> Create a *Builds* folder  
