@@ -66,12 +66,6 @@ namespace GameObjects
                         case TagUtils.GameObjectType.Ball:
                             BallHit(this, mDummyEventArgs);
                             break;
-
-                        case TagUtils.GameObjectType.Brick:
-                        case TagUtils.GameObjectType.DeadBallArea:
-                        case TagUtils.GameObjectType.Paddle:
-                        case TagUtils.GameObjectType.Wall:
-                            break;
                     }
                 });
 

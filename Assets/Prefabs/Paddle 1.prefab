@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed5ba8b7095ff44eb1a680ec65e5dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MovementVelocity: 12
+  _MovementVelocity: 25
   _WallPixelScale: 80
   _WallCollisionBuffer: 4
 --- !u!50 &2090893317744336828

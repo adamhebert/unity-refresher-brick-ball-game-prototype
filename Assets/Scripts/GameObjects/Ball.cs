@@ -39,12 +39,17 @@ namespace GameObjects
                                 Initialize();
                             }
                             break;
+                    }
+                });
 
-                        case TagUtils.GameObjectType.Ball:
-                        case TagUtils.GameObjectType.Brick:
+        private void OnCollisionEnter2D(Collision2D collision) =>
+            TagUtils.GetGameObjectTypeFromTag(collision.gameObject.tag).ForEach(
+                type =>
+                {
+                    switch (type)
+                    {
                         case TagUtils.GameObjectType.Paddle:
-                        case TagUtils.GameObjectType.Wall:
-                        default:
+                            AddForce();
                             break;
                     }
                 });
@@ -64,6 +69,14 @@ namespace GameObjects
             this._RigidBody.AddForce(GetStartingDirection() * _StartingForceMultiplier);
         }
 
+        private void AddForce()
+        {
+            if (this._RigidBody.velocity.magnitude < _MaxMagnitude)
+            {
+                this._RigidBody.AddForce(this._RigidBody.transform.up * this._IncrementalForceOnPaddleHit);
+            }
+        }
+
         private IEnumerator ChangeScene()
         {
             // TODO: Move this duty to some scene manager...some other thing should detect that a game over has occurred.
@@ -79,6 +92,8 @@ namespace GameObjects
         #region InspectorMembers
         [SerializeField] private Vector2 _StartingPosition = default;
         [SerializeField] private float _StartingForceMultiplier = 1.0f;
+        [SerializeField] private float _MaxMagnitude = 1.0f;
+        [SerializeField] private float _IncrementalForceOnPaddleHit = default;
         [SerializeField] private Rigidbody2D _RigidBody = default;
         [SerializeField] private float _AfterDeathDelayBeforeTransition = 0.0f;
         #endregion

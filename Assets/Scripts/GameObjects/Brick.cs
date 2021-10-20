@@ -24,12 +24,17 @@ namespace GameObjects
                 // TODO: Start some kind of break animation.
                 // TODO: Notify the score manager...maybe the ball should do that...or a third party reconciler...
                 TagUtils.GetGameObjectTypeFromTag(collision.gameObject.tag).ForEach(
-                    _ =>
+                    type =>
                     {
-                        mBrickState = BrickState.Breaking;
-                        this.gameObject.SetActive(false);
-                        mGameLifetime.AddScore(_PointValue);
-                        BrickDestroyed(this, mDummyEventArgs);
+                        switch (type)
+                        {
+                            case TagUtils.GameObjectType.Ball:
+                                mBrickState = BrickState.Breaking;
+                                this.gameObject.SetActive(false);
+                                mGameLifetime.AddScore(_PointValue);
+                                BrickDestroyed(this, mDummyEventArgs);
+                                break;
+                        }
                     });
             }
         }
