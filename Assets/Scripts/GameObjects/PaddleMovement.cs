@@ -1,18 +1,23 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Prelude;
+using Utilities;
 
 namespace GameObjects
 {
     public sealed class PaddleMovement : MonoBehaviour
     {
+        public event EventHandler BallHit;
+
         // Start is called before the first frame update
         private void Start()
         {
             mCurrentVelocity = _MovementVelocity;
             mCurrentDirection = Vector2.zero;
             mHorizontalWorldEnd = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - _WallPixelScale - _WallCollisionBuffer, Screen.height, 0.0f)).x - this.GetComponent<SpriteRenderer>().bounds.size.x / 2.0f;
+            mDummyEventArgs = new EventArgs { };
         }
 
         private void FixedUpdate()
@@ -52,9 +57,28 @@ namespace GameObjects
             }
         }
 
+        private void OnCollisionEnter2D(Collision2D collision) =>
+            TagUtils.GetGameObjectTypeFromTag(collision.gameObject.tag).ForEach(
+                type =>
+                {
+                    switch (type)
+                    {
+                        case TagUtils.GameObjectType.Ball:
+                            BallHit(this, mDummyEventArgs);
+                            break;
+
+                        case TagUtils.GameObjectType.Brick:
+                        case TagUtils.GameObjectType.DeadBallArea:
+                        case TagUtils.GameObjectType.Paddle:
+                        case TagUtils.GameObjectType.Wall:
+                            break;
+                    }
+                });
+
         private float mCurrentVelocity;
         private Vector2 mCurrentDirection;
         private float mHorizontalWorldEnd;
+        private EventArgs mDummyEventArgs; // Avoid in game allocations.
 
         private enum MovementType
         {

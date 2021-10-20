@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Utilities;
 
@@ -5,11 +6,14 @@ namespace GameObjects
 {
     public sealed class Brick : MonoBehaviour
     {
+        public event EventHandler BrickDestroyed;
+
         // Start is called before the first frame update
         private void Start()
         {
             mBrickState = BrickState.Normal;
             mGameLifetime = GameLifetime.Instance;
+            mDummyEventArgs = new EventArgs { };
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -25,14 +29,15 @@ namespace GameObjects
                         mBrickState = BrickState.Breaking;
                         this.gameObject.SetActive(false);
                         mGameLifetime.AddScore(_PointValue);
+                        BrickDestroyed(this, mDummyEventArgs);
                     });
             }
         }
 
-
         private BrickState mBrickState = BrickState.Normal;
         // This feels really wrong. Look into better ways of referencing things.
         private GameLifetime mGameLifetime;
+        private EventArgs mDummyEventArgs; // Avoid in game allocations.
 
         private enum BrickState
         {
