@@ -8,6 +8,12 @@ namespace GameObjects
     {
         public event EventHandler BrickDestroyed;
 
+        public void Reinitialize()
+        {
+            this.mBrickState = BrickState.Normal;
+            this.gameObject.SetActive(true);
+        }
+
         // Start is called before the first frame update
         private void Start()
         {

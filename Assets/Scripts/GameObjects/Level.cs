@@ -7,7 +7,7 @@ namespace GameObjects
     public sealed class Level : MonoBehaviour
     {
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             mBricks = FindObjectsOfType<Brick>(true);
 
@@ -31,7 +31,7 @@ namespace GameObjects
             mBricks.ForEach(
                 brick =>
                 {
-                    brick.gameObject.SetActive(true); // Maybe emit an event back to the bricks in the future rather than directly manipulating.
+                    brick.Reinitialize(); // Maybe emit an event back to the bricks in the future rather than directly manipulating...need to get it moving, though.
                 });
 
             mBricksAlive = mBricks.Length;
