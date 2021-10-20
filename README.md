@@ -23,6 +23,17 @@
 *1024x768*
 - I had originally attempted to support more resolutions and have things auto-scale, but I got lost in the weeds too early into the project that was meant to only be a few days of work. Will circle back to this, but it feels good at the one resolution. Used the PixelPerfect camera functionality to allow for transform scaling to match desired pixel size.
 
+### To Run
+- Build settings should be set to the proper scene order already (But just in case, it's MainMenu=0, Level=1, GameOverMenu=2)  
+--> Make sure *PC, Mac & Linux Standalone* is selected  
+--> Select *Build And Run*  
+--> Create a *Builds* folder  
+--> Press *Ok*  
+--> The game should fire up from there.  
+- If you want to run in the editor:  
+--> Add *Assets/Scenes/MainMenu.unity* to the Unity Hierarchy window.  
+--> Note: You can also drag *Assets/Scenes/Level.unity* and *Assets/Scenes/GameOverMenu.unity*, but make sure you disable them before playing.  
+
 ### Features/Implementations:  
 - Menus with scene unloading/loading  
 --> Had some fun with color lerping on the main menu
@@ -40,6 +51,7 @@
 - Some simple Vector angle math
 - Infinite level resetting upon completion
 - DontDestroyOnLoad GameObject
+- Probably more I'm forgetting here
 
 ### Some Possible Feature Upgrades (in no particular order)
 - Examine Unity event system possibilites for better communication and collision resolutions between objects
@@ -55,3 +67,5 @@
 - Powerups
 - Bricks with multiple hit points to break
 - Etc!
+
+Please Enjoy!
