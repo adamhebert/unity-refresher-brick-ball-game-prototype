@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Prelude;
 
-namespace Utilities
+namespace GameUtilities
 {
     public static class TagUtils
     {

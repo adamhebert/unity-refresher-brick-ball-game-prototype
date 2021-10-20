@@ -31,7 +31,7 @@ namespace Experimentation
         {
             var scaleModifier = ResolutionUtils.GetScaleModifier(Screen.width, Screen.height);
 
-            transform.localScale = new Vector3(mReferenceScale.x * scaleModifier, mReferenceScale.y * scaleModifier, 1.0f);
+            this.transform.localScale = new Vector3(mReferenceScale.x * scaleModifier, mReferenceScale.y * scaleModifier, 1.0f);
         }
 
         private int mScreenWidthPrev;

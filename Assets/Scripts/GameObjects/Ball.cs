@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Utilities;
+using GameUtilities;
 
 namespace GameObjects
 {
@@ -70,26 +70,26 @@ namespace GameObjects
 
                             var angleFromRight = Vector2.SignedAngle(this._RigidBody.velocity, Vector2.right);
 
-                            if (angleFromRight < -halfCircleAngle + this._MaxAllowedAngleFromUp)
+                            if (angleFromRight < -halfCircleAngle + _MaxAllowedAngleFromUp)
                             {
                                 // Moving too straight sideways in the upper left quadrant.
                                 //this._RigidBody.velocity = this._RigidBody.velocity.Rotate(halfCircleAngle - this._MaxAllowedAngleFromUp + angleFromRight);
-                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight + rightAngle + this._MaxAllowedAngleFromUp);
+                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight + rightAngle + _MaxAllowedAngleFromUp);
                             }
-                            else if (angleFromRight > halfCircleAngle - this._MaxAllowedAngleFromUp)
+                            else if (angleFromRight > halfCircleAngle - _MaxAllowedAngleFromUp)
                             {
                                 // Moving too straight sideways in the lower left quadrant.
-                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight - (rightAngle + this._MaxAllowedAngleFromUp));
+                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight - (rightAngle + _MaxAllowedAngleFromUp));
                             }
-                            else if (angleFromRight < 0.0f && angleFromRight > -this._MaxAllowedAngleFromUp)
+                            else if (angleFromRight < 0.0f && angleFromRight > -_MaxAllowedAngleFromUp)
                             {
                                 // Moving too straight sideways in the upper right quadrant.
-                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight + rightAngle - this._MaxAllowedAngleFromUp);
+                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight + rightAngle - _MaxAllowedAngleFromUp);
                             }
-                            else if (angleFromRight > 0.0f && angleFromRight < this._MaxAllowedAngleFromUp)
+                            else if (angleFromRight > 0.0f && angleFromRight < _MaxAllowedAngleFromUp)
                             {
                                 // Moving too straight sideways in the lower right quadrant.
-                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(rightAngle - this._MaxAllowedAngleFromUp - angleFromRight);
+                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(rightAngle - _MaxAllowedAngleFromUp - angleFromRight);
                             }
                             break;
                     }
@@ -114,7 +114,7 @@ namespace GameObjects
         {
             if (this._RigidBody.velocity.magnitude < _MaxMagnitude)
             {
-                this._RigidBody.AddForce(this._RigidBody.transform.up * this._IncrementalForceOnPaddleHit);
+                this._RigidBody.AddForce(this._RigidBody.transform.up * _IncrementalForceOnPaddleHit);
             }
         }
 

@@ -8,17 +8,17 @@ namespace Prelude
     {
         internal Option(T value, bool hasValue)
         {
-            Value = value;
-            HasValue = hasValue;
+            mValue = value;
+            mHasValue = hasValue;
         }
 
-        public U Match<U>(Func<T, U> some, Func<U> none) => HasValue ? some(Value) : none();
+        public U Match<U>(Func<T, U> some, Func<U> none) => mHasValue ? some(mValue) : none();
 
         public void Apply(Action<T> some, Action none)
         {
-            if (HasValue)
+            if (mHasValue)
             {
-                some(Value);
+                some(mValue);
             }
             else
             {
@@ -28,23 +28,23 @@ namespace Prelude
 
         public void ForEach(Action<T> some)
         {
-            if (HasValue)
+            if (mHasValue)
             {
-                some(Value);
+                some(mValue);
             }
         }
 
-        public Option<U> Select<U>(Func<T, U> tu) => HasValue ? Some(tu(Value)) : None<U>();
-        public Option<U> SelectMany<U>(Func<T, Option<U>> tu) => HasValue ? tu(Value) : None<U>();
-        public Option<V> SelectMany<U, V>(Func<T, Option<U>> tu, Func<T, U, V> tuv) => SelectMany(tu).Select(u => tuv(Value, u));
+        public Option<U> Select<U>(Func<T, U> tu) => mHasValue ? Some(tu(mValue)) : None<U>();
+        public Option<U> SelectMany<U>(Func<T, Option<U>> tu) => mHasValue ? tu(mValue) : None<U>();
+        public Option<V> SelectMany<U, V>(Func<T, Option<U>> tu, Func<T, U, V> tuv) => SelectMany(tu).Select(u => tuv(mValue, u));
 
         public TFinal Cross<U, TFinal>(Option<U> other, Func<T, U, TFinal> forBoth, Func<T, TFinal> forOriginal, Func<U, TFinal> forOther, Func<TFinal> forNone) =>
             Match(
                 x => other.Match(y => forBoth(x, y), () => forOriginal(x)),
                 () => other.Match(y => forOther(y), () => forNone()));
 
-        private readonly T Value;
-        private readonly bool HasValue;
+        private readonly T mValue;
+        private readonly bool mHasValue;
     }
 
     public static class Option

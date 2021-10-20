@@ -63,17 +63,17 @@ namespace Experimentation
 
             // Modify scale first so the rest of the calculations can be based off new resolution forced scale.
             var scaleModifier = ResolutionUtils.GetScaleModifier(Screen.width, Screen.height);
-            transform.localScale = new Vector3(mReferenceScale.x * scaleModifier, mReferenceScale.y * scaleModifier, 1.0f);
-            transform.localScale = new Vector3(mReferenceScale.x * scaleModifier, mReferenceScale.y, 1.0f);
+            this.transform.localScale = new Vector3(mReferenceScale.x * scaleModifier, mReferenceScale.y * scaleModifier, 1.0f);
+            this.transform.localScale = new Vector3(mReferenceScale.x * scaleModifier, mReferenceScale.y, 1.0f);
             switch (_WallSide)
             {
                 case AxisAlignedWallSide.Left:
                 case AxisAlignedWallSide.Right:
-                    transform.localScale = new Vector3(mReferenceScale.x * scaleModifier, mReferenceScale.y, 1.0f);
+                    this.transform.localScale = new Vector3(mReferenceScale.x * scaleModifier, mReferenceScale.y, 1.0f);
                     break;
                 case AxisAlignedWallSide.Top:
                 case AxisAlignedWallSide.Bottom:
-                    transform.localScale = new Vector3(mReferenceScale.x, mReferenceScale.y * scaleModifier, 1.0f);
+                    this.transform.localScale = new Vector3(mReferenceScale.x, mReferenceScale.y * scaleModifier, 1.0f);
                     break;
             }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Prelude;
-using Utilities;
+using GameUtilities;
 
 namespace GameObjects
 {

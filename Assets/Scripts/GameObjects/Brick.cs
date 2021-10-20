@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using Utilities;
+using GameUtilities;
 
 namespace GameObjects
 {
@@ -10,7 +10,7 @@ namespace GameObjects
 
         public void Reinitialize()
         {
-            this.mBrickState = BrickState.Normal;
+            mBrickState = BrickState.Normal;
             this.gameObject.SetActive(true);
         }
 

@@ -6,13 +6,13 @@ public sealed class GameLifetime : MonoBehaviour
     public long GetScore() => mScore;
     public void AddScore(long score)
     {
-        this.mScore += score;
-        this.mPointsTowardFreeLife += score;
+        mScore += score;
+        mPointsTowardFreeLife += score;
 
-        if (this.mPointsTowardFreeLife >= this._PointsForFreeLife)
+        if (mPointsTowardFreeLife >= _PointsForFreeLife)
         {
-            this.mPointsTowardFreeLife = this.mPointsTowardFreeLife - this._PointsForFreeLife;
-            ++this.mRest;
+            mPointsTowardFreeLife = mPointsTowardFreeLife - _PointsForFreeLife;
+            ++mRest;
         }
     }
     public void AddDeath() => mRest -= 1;
@@ -21,9 +21,9 @@ public sealed class GameLifetime : MonoBehaviour
 
     public void ResetGame()
     {
-        this.mScore = 0;
-        this.mPointsTowardFreeLife = 0;
-        this.mRest = _StartingRest;
+        mScore = 0;
+        mPointsTowardFreeLife = 0;
+        mRest = _StartingRest;
     }
 
     private static GameLifetime GetInstance()
