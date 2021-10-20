@@ -54,6 +54,44 @@ namespace GameObjects
                     }
                 });
 
+
+        private void OnCollisionExit2D(Collision2D collision) =>
+            TagUtils.GetGameObjectTypeFromTag(collision.gameObject.tag).ForEach(
+                type =>
+                {
+                    switch (type)
+                    {
+                        // A helper to make the ball go upward from the paddle. We never really want to hit it sideways.
+                        case TagUtils.GameObjectType.Paddle:
+
+                            const float halfCircleAngle = 180.0f;
+
+                            var angleFromRight = Vector2.SignedAngle(this._RigidBody.velocity, Vector2.right);
+
+                            if (angleFromRight < -halfCircleAngle + this._MaxAllowedAngleFromUp)
+                            {
+                                // Moving too straight sideways in the upper left quadrant.
+                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(halfCircleAngle - this._MaxAllowedAngleFromUp + angleFromRight);
+                            }
+                            else if (angleFromRight > halfCircleAngle - this._MaxAllowedAngleFromUp)
+                            {
+                                // Moving too straight sideways in the lower left quadrant.
+                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight - (halfCircleAngle - this._MaxAllowedAngleFromUp));
+                            }
+                            else if (angleFromRight < 0.0f && angleFromRight > -this._MaxAllowedAngleFromUp)
+                            {
+                                // Moving too straight sideways in the upper right quadrant.
+                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight + this._MaxAllowedAngleFromUp);
+                            }
+                            else if (angleFromRight > 0.0f && angleFromRight < this._MaxAllowedAngleFromUp)
+                            {
+                                // Moving too straight sideways in the lower right quadrant.
+                                this._RigidBody.velocity = this._RigidBody.velocity.Rotate(angleFromRight - this._MaxAllowedAngleFromUp);
+                            }
+                            break;
+                    }
+                });
+
         private void Initialize()
         {
             static Vector2 GetStartingDirection()
@@ -94,6 +132,7 @@ namespace GameObjects
         [SerializeField] private float _StartingForceMultiplier = 1.0f;
         [SerializeField] private float _MaxMagnitude = 1.0f;
         [SerializeField] private float _IncrementalForceOnPaddleHit = default;
+        [SerializeField] private float _MaxAllowedAngleFromUp = default;
         [SerializeField] private Rigidbody2D _RigidBody = default;
         [SerializeField] private float _AfterDeathDelayBeforeTransition = 0.0f;
         #endregion
