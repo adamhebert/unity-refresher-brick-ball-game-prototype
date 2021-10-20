@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _StartingRest: 5
-  _PointsForFreeLife: 150
+  _PointsForFreeLife: 100
